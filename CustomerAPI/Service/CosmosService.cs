@@ -1,4 +1,4 @@
-﻿using Labb3Cosmos.Data.Enteties;
+﻿using CustomerAPI.Data.Enteties;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using System;
@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Labb3Cosmos.Service;
+namespace CustomerAPI.Service;
 
 public class CosmosService
 {
     public readonly Microsoft.Azure.Cosmos.Container container;
 
-    public CosmosService()
+    public CosmosService(IConfiguration config)
     {
-        var connString = Environment.GetEnvironmentVariable("CosmosDbConnection");
-        var dbName = Environment.GetEnvironmentVariable("CosmosDbName");
-        var containerName = Environment.GetEnvironmentVariable("CosmosDbContainer");
+        var connString = config["CosmosDbConnection"];
+        var dbName = config["CosmosDbName"];
+        var containerName = config["CosmosDbContainer"];
 
         var options = new CosmosClientOptions
         {
@@ -26,7 +26,12 @@ public class CosmosService
                     HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             }),
 
-            ConnectionMode = ConnectionMode.Gateway
+            ConnectionMode = ConnectionMode.Gateway,
+
+            SerializerOptions = new CosmosSerializationOptions
+            {
+                PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
+            }
         };
 
         var client = new CosmosClient(connString, options);

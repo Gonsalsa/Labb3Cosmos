@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Labb3Cosmos.Data.Enteties;
+namespace CustomerAPI.Data.Enteties;
 
 public class Salesperson
 {

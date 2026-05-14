@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="Labb3Cosmos/Labb3Cosmos.csproj" />
+  <Project Path="CustomerAPI/CustomerAPI.csproj" Id="6fa4ff72-387d-4996-b48f-9daf79150a70" />
+  <Project Path="Labb3Cosmos/Labb3Functions.csproj" />
 </Solution>

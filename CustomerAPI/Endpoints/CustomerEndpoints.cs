@@ -1,33 +1,18 @@
-﻿using Labb3Cosmos.Data.Enteties;
-using Labb3Cosmos.Service;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Server.HttpSys;
-using Microsoft.AspNetCore.StaticAssets;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Text;
+﻿using CustomerAPI.Data.Enteties;
+using CustomerAPI.Service;
 
-namespace Labb3Cosmos.Controllers;
+namespace CustomerAPI.Controllers;
 
 public static class CustomerEndpoints
 {
-    public static void MapCustomerEndpoints(IHost host)
+    public static void MapCustomerEndpoints(WebApplication app)
     {
 
-        var app = host.Services.GetRequiredService<IApplicationBuilder>()
-                    as WebApplication;
+
 
         //Create
 
-        app!.MapPost("/api/customer", async (
+        app.MapPost("/api/customers", async (
             Customer customer, CosmosService db) =>
         {
             var created = await db.CreateCustomerAsync(customer);
@@ -37,10 +22,10 @@ public static class CustomerEndpoints
 
         //Read
 
-        app.MapGet("api/customers", async (CosmosService db) =>
+        app.MapGet("/api/customers", async (CosmosService db) =>
             Results.Ok(await db.GetAllCustomersAsync()));
 
-        app.MapGet("api/customer/{id}", async (
+        app.MapGet("/api/customers/{id}", async (
             string id, CosmosService db) =>
         {
             var customer = await db.GetCustomerAsync(id);
@@ -48,7 +33,7 @@ public static class CustomerEndpoints
             return customer is null ? Results.NotFound() : Results.Ok(customer);
         });
 
-        app.MapGet("api/customers/search", async (
+        app.MapGet("/api/customers/search", async (
             string? customerName,
             string? salespersonName,
             CosmosService db) =>
@@ -66,7 +51,7 @@ public static class CustomerEndpoints
 
         //Update
 
-        app.MapPut("api/customers/{id}", async (
+        app.MapPut("/api/customers/{id}", async (
             string id, Customer updated, CosmosService db) =>
         {
             var result = await db.UpdateCustomerAsync(id, updated);
@@ -79,7 +64,7 @@ public static class CustomerEndpoints
 
         //Delete
 
-        app.MapDelete("api/customers/{id}", async (
+        app.MapDelete("/api/customers/{id}", async (
             string id, CosmosService db) =>
         {
             var deleted = await db.DeleteCustomerAsync(id);
