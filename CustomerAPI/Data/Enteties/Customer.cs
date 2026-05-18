@@ -24,7 +24,7 @@ public class Customer
     public string Email { get; set; } = string.Empty;
 
     [JsonPropertyName("adress")]
-    public string Adress {  get; set; } = string.Empty;
+    public string Adress { get; set; } = string.Empty;
 
     [JsonPropertyName("salesperson")]
     public Salesperson Salesperson { get; set; } = new();
@@ -36,6 +36,6 @@ public class Customer
 
 
     [JsonPropertyName("updatedAt")]
-    public DateTime UpdatedAt {  get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 }

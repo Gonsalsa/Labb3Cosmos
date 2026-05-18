@@ -81,7 +81,6 @@ public class CosmosService
             return null;
 
         update.Id = id;
-        update.CreatedAt = DateTime.Now;
         update.UpdatedAt = DateTime.Now;
 
         var response = await container.ReplaceItemAsync(update, id, new PartitionKey(id));
@@ -109,8 +108,8 @@ public class CosmosService
             .ToFeedIterator();
 
         var result = new List<Customer>();
-        
-        while(query.HasMoreResults)
+
+        while (query.HasMoreResults)
             result.AddRange(await query.ReadNextAsync());
 
         return result;

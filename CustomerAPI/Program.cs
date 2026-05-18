@@ -2,6 +2,7 @@
 using CustomerAPI.Controllers;
 using CustomerAPI.Service;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow.Schemas;
+using Scalar.AspNetCore;
 
 namespace CustomerAPI
 {
@@ -13,7 +14,12 @@ namespace CustomerAPI
 
             builder.Services.AddSingleton<CosmosService>();
 
+            builder.Services.AddOpenApi();
+
             var app = builder.Build();
+
+            app.MapOpenApi();
+            app.MapScalarApiReference();
 
             CustomerEndpoints.MapCustomerEndpoints(app);
 
