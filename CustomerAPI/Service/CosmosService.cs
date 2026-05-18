@@ -81,7 +81,6 @@ public class CosmosService
             return null;
 
         update.Id = id;
-        update.CreatedAt = DateTime.Now;
         update.UpdatedAt = DateTime.Now;
 
         var response = await container.ReplaceItemAsync(update, id, new PartitionKey(id));
